@@ -41,6 +41,7 @@ crossword/
 ├── lib/
 │   ├── utils.ts             # Utility functions (cn, sanitizeAnswer)
 │   ├── types.ts             # TypeScript interfaces
+│   ├── storage.ts           # localStorage-session (load/save/clear)
 │   └── crossword/           # Korsordsgenererings-logik
 │       ├── grid.ts              # Grid-manipulation
 │       ├── placementEngine.ts   # Placeringsalgoritm
@@ -60,6 +61,8 @@ crossword/
 - Svar saniteras automatiskt: VERSALER, inga mellanslag, endast A-Z,Å,Ä,Ö
 - Plus-knapp för att lägga till frågor
 - Röd X-knapp för att ta bort rader
+- **Session persistens**: frågor, svar, genererat korsord och bildformat sparas i `localStorage` så att sessionen finns kvar efter siduppdatering
+- **"Rensa allt"**-knapp: nollställer editor, grid och rensar lagrad session
 
 ### 2. Live Preview
 

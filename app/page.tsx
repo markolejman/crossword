@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ClueAnswer, CrosswordGrid as CrosswordGridType, AspectRatio } from "@/lib/types";
 import { CrosswordEditor } from "@/components/CrosswordEditor";
 import { CrosswordGrid } from "@/components/CrosswordGrid";
@@ -11,15 +11,39 @@ import { generateLivePreview, generateCrossword } from "@/lib/crossword/crosswor
 import { renderFullCrosswordImage, getCluesFromGrid } from "@/lib/crossword/svgRenderer";
 import { exportToPNG } from "@/lib/crossword/exportPng";
 import { exportToPDF } from "@/lib/crossword/exportPdf";
-import { Download, FileImage, Printer } from "lucide-react";
+import {
+  clearSession,
+  createEmptySession,
+  loadSession,
+  saveSession,
+} from "@/lib/storage";
+import { Download, FileImage, Printer, Trash2 } from "lucide-react";
 
 export default function Home() {
-  const [clues, setClues] = useState<ClueAnswer[]>([
-    { id: crypto.randomUUID(), clue: "", answer: "" },
-  ]);
+  const [clues, setClues] = useState<ClueAnswer[]>(
+    () => createEmptySession().clues
+  );
   const [finalGrid, setFinalGrid] = useState<CrosswordGridType | null>(null);
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>("4:3");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  // Restore saved session after mount (avoids SSR hydration mismatch)
+  useEffect(() => {
+    const saved = loadSession();
+    if (saved) {
+      setClues(saved.clues);
+      setFinalGrid(saved.finalGrid);
+      setAspectRatio(saved.aspectRatio);
+    }
+    setHasHydrated(true);
+  }, []);
+
+  // Persist questions, answers, grid and format whenever they change
+  useEffect(() => {
+    if (!hasHydrated) return;
+    saveSession({ clues, finalGrid, aspectRatio });
+  }, [clues, finalGrid, aspectRatio, hasHydrated]);
 
   // Live preview — derived from clues (no effect needed)
   const previewGrid = useMemo(() => {
@@ -33,6 +57,14 @@ export default function Home() {
     if (!previewGrid) return new Set<string>();
     return new Set(previewGrid.words.map(w => w.id));
   }, [previewGrid]);
+
+  const handleClearAll = () => {
+    const fresh = createEmptySession();
+    setClues(fresh.clues);
+    setFinalGrid(fresh.finalGrid);
+    setAspectRatio(fresh.aspectRatio);
+    clearSession();
+  };
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -142,8 +174,18 @@ export default function Home() {
           {/* Left: Editor */}
           <div className="space-y-6">
             <Card>
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0">
                 <CardTitle>Frågor och Svar</CardTitle>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleClearAll}
+                  className="shrink-0 text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
+                >
+                  <Trash2 className="h-4 w-4 mr-1.5" />
+                  Rensa allt
+                </Button>
               </CardHeader>
               <CardContent>
                 <CrosswordEditor 
