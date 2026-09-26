@@ -1,8 +1,8 @@
-# Korsordsgenerator - Project Overview
+# fun with words. — Project Overview
 
 ## Projektbeskrivning
 
-En modern webbapplikation för att skapa professionella svenska korsord med automatisk placeringsalgoritm och export till PNG, PDF och utskrift.
+En modern webbapplikation (**fun with words.**) för att skapa professionella svenska korsord med automatisk placeringsalgoritm och export till PNG, PDF och utskrift. Designen är high-end och lekfull: bubble-typografi, Lavender Blush / Blush-palett.
 
 ## Syfte
 
@@ -123,19 +123,23 @@ crossword/
 
 ## Design & Tema
 
-**Färgpalett**:
-- Bakgrund: `#f9fafb` (gray-50)
-- Kort: `#ffffff` med border `#e5e7eb`
-- Text: `#000000` (black)
-- Knappar: Black med white text
-- Destructive: `#dc2626` (red-600)
+**Varumärke**: **fun with words.** — lekfull men high-end, inspirerad av mjuka marshmallow/bubble-3D-titlar och en sofistikerad punk-rosa palett.
+
+**Färgpalett** (från referens):
+- Bakgrund: `#FFE6ED` (Lavender Blush) med mjuka molnliknande radial gradients
+- Punk / primärknapp: `#CF7486` (Blush), hover `#B86374`
+- Cream till bubble-titel: `#FFF8F0`
+- Text: `#5C3A44`, muted `#8A5A66`
+- Ytor: frostad vit/glas (`panel`) med soft blush-skuggor
+- Border: `#F0C8D2`
 
 **Typografi**:
-- Body: Arial, Helvetica, sans-serif
-- Grid bokstäver: Arial, bold
-- Grid nummer: Arial, regular, mindre storlek
+- Hero-titel: Starbim (lokal bubble-font av Khurasan), Blush `#CF7486` + lager-text-shadow för marshmallow-volym
+- UI body: Outfit
+- Licens: Starbim är free for commercial use (CC BY-ND) — attribution till Khurasan
+- Grid bokstäver/nummer: oförändrad (Arial) — grid-designen rörs inte
 
-**Korsordsgrid**:
+**Korsordsgrid** (orörd):
 - Vita rutor med svarta linjer (2px)
 - Nummer i övre vänstra hörnet
 - Bokstäver centrerade i rutan
@@ -215,6 +219,10 @@ npm run lint
 
 ## Uppdateringshistorik
 
+- **2026-09-26**: Visuell rebrand till **fun with words.**
+  - Bubble-titel (Starbim), Lavender Blush / Blush-palett
+  - Punk-rosa knappar, frosted panels, soft pink cloud-bakgrund
+  - Funktionalitet och korsordsgrid oförändrade
 - **2026-07-14**: Initial release
   - Komplett korsordsgenerator med smart placeringsalgoritm
   - Live preview

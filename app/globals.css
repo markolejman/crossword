@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffe6ed;
+  --foreground: #5c3a44;
+  --blush: #cf7486;
+  --blush-hover: #b86374;
+  --blush-soft: #f7d4dc;
+  --lavender-blush: #ffe6ed;
+  --cream: #fff8f0;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-solid: #fffafb;
+  --muted: #8a5a66;
+  --border: #f0c8d2;
+  --ring: #cf7486;
+  --destructive: #c45c6e;
+  --destructive-hover: #b04f60;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-blush: var(--blush);
+  --color-blush-hover: var(--blush-hover);
+  --color-blush-soft: var(--blush-soft);
+  --color-lavender-blush: var(--lavender-blush);
+  --color-cream: var(--cream);
+  --color-surface: var(--surface-solid);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-hover: var(--destructive-hover);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-bubble);
+  --shadow-blush: 0 8px 20px rgba(207, 116, 134, 0.28);
+  --shadow-blush-lg: 0 10px 24px rgba(207, 116, 134, 0.35);
+  --shadow-destructive: 0 6px 16px rgba(196, 92, 110, 0.25);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--lavender-blush);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(255, 255, 255, 0.75) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 85% 15%, rgba(255, 200, 214, 0.55) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 90%, rgba(255, 255, 255, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 10% 70%, rgba(207, 116, 134, 0.12) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* Soft marshmallow bubble title — Starbim by Khurasan */
+.bubble-title {
+  font-family: var(--font-bubble), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--blush);
+  text-shadow:
+    0 1px 0 #b86374,
+    0 2px 0 #a85768,
+    0 3px 0 #984c5d,
+    0 4px 0 #884152,
+    0 6px 12px rgba(92, 58, 68, 0.28),
+    0 14px 28px rgba(92, 58, 68, 0.16);
+  animation: title-rise 0.9s ease-out both;
+}
+
+@keyframes title-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s ease-out 0.15s both;
+}
+
+.panel {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 1px 2px rgba(156, 80, 98, 0.04),
+    0 12px 40px rgba(156, 80, 98, 0.08);
 }

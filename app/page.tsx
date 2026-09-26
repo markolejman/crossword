@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { ClueAnswer, CrosswordGrid as CrosswordGridType, AspectRatio } from "@/lib/types";
 import { CrosswordEditor } from "@/components/CrosswordEditor";
 import { CrosswordGrid } from "@/components/CrosswordGrid";
@@ -17,27 +17,22 @@ export default function Home() {
   const [clues, setClues] = useState<ClueAnswer[]>([
     { id: crypto.randomUUID(), clue: "", answer: "" },
   ]);
-  const [previewGrid, setPreviewGrid] = useState<CrosswordGridType | null>(null);
   const [finalGrid, setFinalGrid] = useState<CrosswordGridType | null>(null);
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>("4:3");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Live preview — derived from clues (no effect needed)
+  const previewGrid = useMemo(() => {
+    const validClues = clues.filter((c) => c.answer.length > 0);
+    if (validClues.length === 0) return null;
+    return generateLivePreview(validClues);
+  }, [clues]);
 
   // Track which words are placed in the grid
   const placedWordIds = useMemo(() => {
     if (!previewGrid) return new Set<string>();
     return new Set(previewGrid.words.map(w => w.id));
   }, [previewGrid]);
-
-  // Live preview
-  useEffect(() => {
-    const validClues = clues.filter((c) => c.answer.length > 0);
-    if (validClues.length > 0) {
-      const grid = generateLivePreview(validClues);
-      setPreviewGrid(grid);
-    } else {
-      setPreviewGrid(null);
-    }
-  }, [clues]);
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -132,18 +127,20 @@ export default function Home() {
   const validCluesCount = clues.filter((c) => c.answer.length > 0).length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">Korsordsgenerator</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <header className="text-center mb-12 sm:mb-16">
+          <h1 className="bubble-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+            fun with words.
+          </h1>
+          <p className="fade-up mt-5 text-base sm:text-lg text-muted font-light tracking-wide">
             Skapa professionella korsord enkelt och snabbt
           </p>
-        </div>
+        </header>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left: Editor */}
-          <div>
+          <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Frågor och Svar</CardTitle>
@@ -159,7 +156,7 @@ export default function Home() {
 
             {/* Live Preview */}
             {previewGrid && (
-              <Card className="mt-6">
+              <Card>
                 <CardHeader>
                   <CardTitle>Live-förhandsvisning</CardTitle>
                 </CardHeader>
@@ -175,21 +172,21 @@ export default function Home() {
             {!finalGrid ? (
               <Card>
                 <CardContent className="pt-6">
-                  <div className="text-center space-y-4">
-                    <div className="text-gray-500">
-                      <p className="mb-2">
+                  <div className="text-center space-y-5">
+                    <div className="text-muted">
+                      <p className="mb-2 font-medium text-foreground">
                         Lägg till {validCluesCount} / minst 3 frågor och svar
                       </p>
-                      <p className="text-sm">
-                        Klicka sedan på "Generera korsord" för att skapa det
+                      <p className="text-sm leading-relaxed">
+                        Klicka sedan på &quot;Generera korsord&quot; för att skapa det
                         färdiga korsordet
                       </p>
                     </div>
 
                     {validCluesCount >= 3 && (
                       <>
-                        <div className="pt-4">
-                          <label className="block text-sm font-medium mb-2">
+                        <div className="pt-2">
+                          <label className="block text-sm font-medium text-foreground mb-3">
                             Bildformat
                           </label>
                           <div className="flex gap-2 justify-center">

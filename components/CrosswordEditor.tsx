@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ClueAnswer } from "@/lib/types";
 import { ClueInput } from "./ClueInput";
 import { Button } from "./ui/button";

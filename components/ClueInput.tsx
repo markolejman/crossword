@@ -40,7 +40,7 @@ export function ClueInput({ clue, onChange, onRemove, isPlaced = false }: ClueIn
           />
           {isPlaced && clue.answer.length > 0 && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Check className="h-5 w-5 text-green-600" />
+              <Check className="h-5 w-5 text-blush" />
             </div>
           )}
         </div>

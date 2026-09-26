@@ -16,10 +16,10 @@ export function ClueList({ across, down }: ClueListProps) {
     <div className="grid grid-cols-2 gap-8 mt-8">
       {/* Vågrätt */}
       <div>
-        <h3 className="text-xl font-bold mb-4">Vågrätt</h3>
+        <h3 className="text-lg font-semibold mb-4 text-blush">Vågrätt</h3>
         <div className="space-y-2">
           {across.map((clue) => (
-            <div key={`across-${clue.number}`} className="text-sm">
+            <div key={`across-${clue.number}`} className="text-sm text-foreground">
               <span className="font-semibold">{clue.number}.</span> {clue.clue}
             </div>
           ))}
@@ -28,10 +28,10 @@ export function ClueList({ across, down }: ClueListProps) {
 
       {/* Lodrätt */}
       <div>
-        <h3 className="text-xl font-bold mb-4">Lodrätt</h3>
+        <h3 className="text-lg font-semibold mb-4 text-blush">Lodrätt</h3>
         <div className="space-y-2">
           {down.map((clue) => (
-            <div key={`down-${clue.number}`} className="text-sm">
+            <div key={`down-${clue.number}`} className="text-sm text-foreground">
               <span className="font-semibold">{clue.number}.</span> {clue.clue}
             </div>
           ))}
