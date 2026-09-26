@@ -161,6 +161,11 @@ export function findBestPlacement(
   return options[0];
 }
 
+/**
+ * Grow the grid by adding empty cells to the right/bottom.
+ * Existing cell coordinates stay valid (no re-centering), so placed word
+ * positions remain correct.
+ */
 export function expandGrid(
   grid: Cell[][],
   targetWidth: number,
@@ -175,16 +180,11 @@ export function expandGrid(
 
   const newWidth = Math.max(targetWidth, currentWidth);
   const newHeight = Math.max(targetHeight, currentHeight);
-
   const newGrid = createEmptyGrid(newWidth, newHeight);
-
-  // Copy existing grid to center of new grid
-  const offsetX = Math.floor((newWidth - currentWidth) / 2);
-  const offsetY = Math.floor((newHeight - currentHeight) / 2);
 
   for (let y = 0; y < currentHeight; y++) {
     for (let x = 0; x < currentWidth; x++) {
-      newGrid[y + offsetY][x + offsetX] = { ...grid[y][x] };
+      newGrid[y][x] = { ...grid[y][x] };
     }
   }
 

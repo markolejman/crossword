@@ -49,7 +49,12 @@ export default function Home() {
   const previewGrid = useMemo(() => {
     const validClues = clues.filter((c) => c.answer.length > 0);
     if (validClues.length === 0) return null;
-    return generateLivePreview(validClues);
+    try {
+      return generateLivePreview(validClues);
+    } catch (error) {
+      console.error("Kunde inte generera förhandsvisning:", error);
+      return null;
+    }
   }, [clues]);
 
   // Track which words are placed in the grid
@@ -71,9 +76,15 @@ export default function Home() {
     const validClues = clues.filter((c) => c.answer.length > 0);
 
     setTimeout(() => {
-      const grid = generateCrossword(validClues);
-      setFinalGrid(grid);
-      setIsGenerating(false);
+      try {
+        const grid = generateCrossword(validClues);
+        setFinalGrid(grid);
+      } catch (error) {
+        console.error("Kunde inte generera korsord:", error);
+        setFinalGrid(null);
+      } finally {
+        setIsGenerating(false);
+      }
     }, 100);
   };
 

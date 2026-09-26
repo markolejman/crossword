@@ -89,11 +89,16 @@ crossword/
 - Komprimerar grid för att ta bort tomma utrymmen
 - Beräknar gränser
 
+**Grid-expansion** (`expandGrid` i `placementEngine.ts`):
+- Växer grid åt höger/nedåt utan att flytta befintliga celler
+- Behåller giltiga koordinater för redan placerade ord (undviker krasch vid många frågor)
+
 **Numrering** (`lib/crossword/numbering.ts`):
 - Följer standardregler för korsord
 - En ruta får nummer om den är start på vågrätt eller lodrätt ord
 - Samma nummer används om både vågrätt och lodrätt ord börjar i samma ruta
 - Numrerar från vänster till höger, uppifrån och ner
+- Skyddad mot ogiltiga koordinater
 
 ### 4. Rendering
 

@@ -22,19 +22,18 @@ export function assignNumbers(grid: Cell[][], words: PlacedWord[]): void {
   const numberedPositions = new Set<string>();
 
   for (const word of sortedWords) {
+    const cell = grid[word.y]?.[word.x];
+    if (!cell) continue;
+
     const posKey = `${word.x},${word.y}`;
 
     if (!numberedPositions.has(posKey)) {
-      grid[word.y][word.x].number = currentNumber;
+      cell.number = currentNumber;
       word.number = currentNumber;
       numberedPositions.add(posKey);
       currentNumber++;
-    } else {
-      // Find the number at this position
-      const existingNumber = grid[word.y][word.x].number;
-      if (existingNumber !== null) {
-        word.number = existingNumber;
-      }
+    } else if (cell.number !== null) {
+      word.number = cell.number;
     }
   }
 }

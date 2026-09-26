@@ -55,8 +55,14 @@ export function generateCrossword(clues: ClueAnswer[]): CrosswordGrid | null {
         number: 0, // Will be assigned later
       });
     } else {
-      // Try expanding grid
-      const expandedGrid = expandGrid(grid, initialSize + 10, initialSize + 10);
+      // Grow from current size (not fixed initialSize) so repeated expands work
+      const currentWidth = grid[0]?.length || initialSize;
+      const currentHeight = grid.length || initialSize;
+      const expandedGrid = expandGrid(
+        grid,
+        currentWidth + 10,
+        currentHeight + 10
+      );
       const placementAfterExpand = findBestPlacement(
         expandedGrid,
         clue.answer,
